@@ -3,7 +3,7 @@ name = "board"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
-description = "Real-time transit departure board for OneBusAway, built with Slint"
+description = "Real-time Caltrain departure board for Redwood City, built with Slint"
 default-run = "board"
 
 [features]
@@ -13,6 +13,7 @@ framebuffer = ["dep:slint-backend-linuxfb"]
 
 [dependencies]
 chrono = "0.4"
+csv = "1.3"
 libc = "0.2"
 image = "0.24.9"
 reqwest = { version = "0.13.1", features = ["json"] }
@@ -25,6 +26,7 @@ slint = { version = "1.14.1", default-features = false, features = [
 ] }
 slint-backend-linuxfb = { version = "0.1.1", optional = true }
 tokio = { version = "1.49.0", features = ["full"] }
+zip = { version = "2", default-features = false, features = ["deflate"] }
 
 [profile.release]
 opt-level = "z"

@@ -44,6 +44,6 @@ pkgs.mkShell {
 
     echo "Cross-compilation environment ready!"
     echo "Build for ARM:     cargo zigbuild --release --target armv7-unknown-linux-gnueabihf.2.28 --no-default-features --features framebuffer"
-    echo "Build for desktop: cargo run -- \"<stop_name>\" <stop_id> [stop_id...]"
+    echo "Build for desktop: cargo run"
   '';
 }

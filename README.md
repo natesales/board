@@ -1,22 +1,15 @@
 # board
 
-A real-time transit departure board built with [Slint](https://slint.dev/), displaying arrivals from the [OneBusAway](https://onebusaway.org/) Puget Sound API.
+A real-time transit departure board built with [Slint](https://slint.dev/), showing Redwood City Caltrain arrivals and departures.
+
+Live times come from Caltrain's GTFS-Realtime trip updates (`https://www.caltrain.com/files/rt/tripupdates/CT.json`). Destinations come from the static GTFS feed linked on [Caltrain's developer page](https://www.caltrain.com/developer-resources). Northbound platform `70141` and southbound platform `70142` are both included. No API key is required.
 
 Designed to run on a PROXmobil3 with a framebuffer display, but also works as a desktop window for development.
-
-## Configuration
-
-Requires the `OBA_API_KEY` environment variable to be set with an [OneBusAway Puget Sound API key](https://www.soundtransit.org/help-contacts/business-information/open-transit-data-otd). Email `oba_api_key@soundtransit.org` to request one.
 
 ## Usage
 
 ```
-board <stop_name> <stop_id> [stop_id...]
-```
-
-Example:
-```
-OBA_API_KEY=your-key cargo run -- "University District" 40_990001 40_990002
+cargo run
 ```
 
 ## Building
@@ -24,7 +17,7 @@ OBA_API_KEY=your-key cargo run -- "University District" 40_990001 40_990002
 ### Desktop (x86, windowed)
 
 ```
-OBA_API_KEY=your-key cargo run -- "University District" 40_990001 40_990002
+cargo run
 ```
 
 ### ARM (PROXmobil3, framebuffer)
@@ -50,8 +43,7 @@ cargo zigbuild --release --target armv7-unknown-linux-gnueabihf.2.28 --no-defaul
 
    [Service]
    Type=simple
-   Environment=OBA_API_KEY=your-key
-   ExecStart=/init/board/exe "Your Stop Name" your_stop_id your_stop_id2
+   ExecStart=/init/board/exe
    Restart=always
    RestartSec=2
    WorkingDirectory=/init/board
@@ -87,7 +79,7 @@ cargo zigbuild --release --target armv7-unknown-linux-gnueabihf.2.28 --no-defaul
    systemctl start board.service
    ```
 
-5. To update the stop or API key later:
+5. To change the service later:
    ```
    ssh root@<DEVICE_IP>
    mount -o remount,rw /
@@ -99,10 +91,10 @@ cargo zigbuild --release --target armv7-unknown-linux-gnueabihf.2.28 --no-defaul
 
 ## Debug CLI
 
-Inspect raw API data and see how arrivals are deduplicated:
+Inspect the live Redwood City feed and the rows that make it onto the board:
 
 ```
-OBA_API_KEY=your-key cargo run --bin debug_arrivals -- "University District" 40_990001 40_990002
+cargo run --bin debug_arrivals
 ```
 
 ## Development
